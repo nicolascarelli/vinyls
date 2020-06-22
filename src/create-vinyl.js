@@ -10,10 +10,11 @@ const documentClient = new AWS.DynamoDB.DocumentClient();
 
 exports.handler = async event => {
   
-  const { error } = validate(event.body)
+  const body = JSON.parse(event.body)
+  const { error } = validate(body)
   if (error) return res.status(400).send(error.details[0].message)
 
-  const { title, band, album } = JSON.parse(event.body);
+  const { title, band, album } = body;
   const params = {
     TableName: "vinyls", // The name of your DynamoDB table
     Item: { // Creating an Item with a unique id and with the passed title
