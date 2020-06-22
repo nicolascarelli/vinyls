@@ -27,7 +27,7 @@ Resources: # (2)
       CodeUri: src/
       Handler: get-vinyls.handler
       Policies: AmazonDynamoDBFullAccess
-      Runtime: nodejs8.10
+      Runtime: nodejs12.x
       Events:
         GetVinyls:
           Type: Api
