@@ -19,5 +19,5 @@ Resources: # (2)
         CreateVinyl: # 6
           Type: Api
           Properties:
-            Path: /vinyls #7
+            Path: /vinyl #7
             Method: post

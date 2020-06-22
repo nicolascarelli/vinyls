@@ -8,3 +8,16 @@ Resources:
       PrimaryKey:
         Name: id
         Type: String
+  CreateVinylFunction:
+    Type: AWS::Serverless::Function
+    Properties:
+      CodeUri: s3://vinyls-api/9f1ed417d133760d1b1a8cb9d78c8078
+      Handler: create-vinyl.handler
+      Policies: AmazonDynamoDBFullAccess
+      Runtime: nodejs12.x
+      Events:
+        CreateVinyl:
+          Type: Api
+          Properties:
+            Path: /vinyls
+            Method: post
