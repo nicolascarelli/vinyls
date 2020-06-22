@@ -16,7 +16,7 @@ Resources: # (2)
       Policies: AmazonDynamoDBFullAccess # 5
       Runtime: nodejs12.x
       Events:
-        CreateBook: # 6
+        CreateVinyl: # 6
           Type: Api
           Properties:
             Path: /vinyls #7
