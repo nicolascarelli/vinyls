@@ -12,7 +12,13 @@ exports.handler = async event => {
   
   const body = JSON.parse(event.body)
   const { error } = validate(body)
-  if (error) return res.status(400).send(error.details[0].message)
+  
+  if (error) {
+    return {
+      statusCode: 500,
+      body: error.details[0].message
+    };
+  }
 
   const { title, band, album } = body;
   const params = {

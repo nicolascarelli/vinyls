@@ -34,3 +34,16 @@ Resources: # (2)
           Properties:
             Path: /vinyls
             Method: get
+  GetVinylFunction:
+    Type: AWS::Serverless::Function
+    Properties:
+      CodeUri: src/
+      Handler: get-vinyl.handler
+      Policies: AmazonDynamoDBFullAccess
+      Runtime: nodejs12.x
+      Events:
+        GetVinyl:
+          Type: Api
+          Properties:
+            Path: /vinyl/:id
+            Method: get  
