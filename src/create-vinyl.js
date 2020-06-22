@@ -1,5 +1,6 @@
 const AWS = require("aws-sdk");
 const crypto = require("crypto");
+const Joi = require("joi")
 
 // Generate unique id with no external dependencies
 const generateUUID = () => crypto.randomBytes(16).toString("hex");
@@ -8,12 +9,18 @@ const generateUUID = () => crypto.randomBytes(16).toString("hex");
 const documentClient = new AWS.DynamoDB.DocumentClient();
 
 exports.handler = async event => {
-  const { title } = JSON.parse(event.body);
+  
+  const { error } = validate(event.body)
+  if (error) return res.status(400).send(error.details[0].message)
+
+  const { title, band, album } = JSON.parse(event.body);
   const params = {
     TableName: "vinyls", // The name of your DynamoDB table
     Item: { // Creating an Item with a unique id and with the passed title
       id: generateUUID(),
-      title: title
+      title: title,
+      band: band,
+      album: album
     }
   };
   try {
@@ -30,3 +37,13 @@ exports.handler = async event => {
     };
   }
 };
+
+function validate(email) {
+  const schema = {
+    title: Joi.string().required(),
+    band: Joi.string().required(),
+    album: Joi.string().required(),
+  }
+
+  return Joi.validate(email, schema)
+}
