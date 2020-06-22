@@ -64,7 +64,7 @@ Resources: # (2)
     Type: AWS::Serverless::Function
     Properties:
       CodeUri: src/
-      Handler: update-vinyl.handler
+      Handler: delete-vinyl.handler
       Policies: AmazonDynamoDBFullAccess
       Runtime: nodejs12.x
       Events:

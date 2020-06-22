@@ -29,10 +29,9 @@ exports.handler = async event => {
     }
   };
   try {
-    const data = await documentClient.putItem(params).promise();
+    const data = await documentClient.put(params).promise();
     const response = {
-      statusCode: 200,
-      body: JSON.stringify(data)
+      statusCode: 200
     };
     return response;
   } catch (e) {
