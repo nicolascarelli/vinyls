@@ -4,7 +4,7 @@ Resources: # (2)
   DynamoVinylsTable: # (3)
     Type: AWS::Serverless::SimpleTable # (4)
     Properties:
-      TableName: vinyls # (5)
+      TableName: vinylss # (5)
       PrimaryKey:
         Name: id # (6)
         Type: String
