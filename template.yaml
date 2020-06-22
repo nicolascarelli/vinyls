@@ -45,5 +45,31 @@ Resources: # (2)
         GetVinyl:
           Type: Api
           Properties:
-            Path: /vinyl/:id
-            Method: get  
+            Path: /vinyl/{id}
+            Method: get
+  UpdateVinylFunction:
+    Type: AWS::Serverless::Function
+    Properties:
+      CodeUri: src/
+      Handler: update-vinyl.handler
+      Policies: AmazonDynamoDBFullAccess
+      Runtime: nodejs12.x
+      Events:
+        UpdateVinyl:
+          Type: Api
+          Properties:
+            Path: /vinyl/{id}
+            Method: put  
+  DeleteVinylFunction:
+    Type: AWS::Serverless::Function
+    Properties:
+      CodeUri: src/
+      Handler: update-vinyl.handler
+      Policies: AmazonDynamoDBFullAccess
+      Runtime: nodejs12.x
+      Events:
+        DeleteVinyl:
+          Type: Api
+          Properties:
+            Path: /vinyl/{id}
+            Method: delete  
