@@ -12,7 +12,12 @@ exports.handler = async event => {
   try {
     const data = await documentClient.delete(params).promise();
     const response = {
-      statusCode: 200
+      statusCode: 200,
+      headers: {
+        "Access-Control-Allow-Headers" : "Content-Type",
+        "Access-Control-Allow-Origin": "*",
+        "Access-Control-Allow-Methods": "OPTIONS,POST,GET,PUT,DELETE"
+    },
     };
     return response;
   } catch (e) {

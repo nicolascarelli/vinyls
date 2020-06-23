@@ -1,6 +1,6 @@
 const AWS = require("aws-sdk");
 const crypto = require("crypto");
-const validate = require('./validate')
+const validate = require("./validate");
 
 // Generate unique id with no external dependencies
 const generateUUID = () => crypto.randomBytes(16).toString("hex");
@@ -8,26 +8,27 @@ const generateUUID = () => crypto.randomBytes(16).toString("hex");
 // Initialising the DynamoDB SDK
 const documentClient = new AWS.DynamoDB.DocumentClient();
 
-exports.handler = async event => {
-  
-  const body = JSON.parse(event.body)
-  const { error } = validate(body)
-  
+exports.handler = async (event) => {
+  const body = JSON.parse(event.body);
+  const { error } = validate(body);
+
   if (error) {
     return {
       statusCode: 500,
-      body: error.details[0].message
+      body: error.details[0].message,
     };
   }
 
   const { title, band, album } = body;
+  const id = generateUUID()
   const params = {
     TableName: "vinyls", // The name of your DynamoDB table
-    Item: { // Creating an Item with a unique id and with the passed title
-      id: generateUUID(),
+    Item: {
+      // Creating an Item with a unique id and with the passed title
+      id: id,
       title: title,
       band: band,
-      album: album
+      album: album,
     }
   };
   try {
@@ -35,13 +36,18 @@ exports.handler = async event => {
     const data = await documentClient.put(params).promise();
     const response = {
       statusCode: 200,
-      body: data
+      body: JSON.stringify(id),
+      headers: {
+        "Access-Control-Allow-Headers": "Content-Type",
+        "Access-Control-Allow-Origin": "*",
+        "Access-Control-Allow-Methods": "OPTIONS,POST,GET,PUT,DELETE",
+      },
     };
-    return response; // Returning a 200 if the item has been inserted 
+    return response; // Returning a 200 if the item has been inserted
   } catch (e) {
     return {
       statusCode: 500,
-      body: JSON.stringify(e)
+      body: JSON.stringify(e),
     };
   }
 };

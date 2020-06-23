@@ -31,7 +31,13 @@ exports.handler = async event => {
   try {
     const data = await documentClient.put(params).promise();
     const response = {
-      statusCode: 200
+      statusCode: 200,
+      body: JSON.stringify(data.Items),
+      headers: {
+        "Access-Control-Allow-Headers": "Content-Type",
+        "Access-Control-Allow-Origin": "*",
+        "Access-Control-Allow-Methods": "OPTIONS,POST,GET,PUT",
+      },
     };
     return response;
   } catch (e) {
